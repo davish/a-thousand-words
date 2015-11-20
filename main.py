@@ -1,4 +1,6 @@
 import webapp2
+import bs4
+import urllib2
 
 class MainPage(webapp2.RequestHandler):
   def get(self):
