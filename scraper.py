@@ -18,11 +18,20 @@ class Newspaper:
 
   def __init__(self, url):
     self.url = url
-    self.html = requests.get(url).text
+    self.html = requests.get(url).content
     self.soup = BeautifulSoup(self.html, 'html.parser')
 
+  def absolute_url(self, url):
+    if self.url.startswith(url):
+      return url
+
+    if url[0] == '/':
+      return self.url + url[1:]
+    else:
+      return self.url + url
+
   def refresh(self):
-    self.html = requests.get(self.url).text
+    self.html = requests.get(self.url).content
     self.soup = BeautifulSoup(self.html, 'html.parser')
 
   def get_articles(self):
@@ -37,11 +46,11 @@ class Newspaper:
     return self.get_headline().a.string
 
   def get_headline_url(self):
-    return self.get_headline().a.get('href')
+    return self.absolute_url(self.get_headline().a.get('href'))
   
   def get_headline_soup(self):
     page_url = self.get_headline_url()
-    html = requests.get(page_url).text
+    html = requests.get(page_url).content
     return BeautifulSoup(html, 'html.parser')
 
   def get_image_url(self):
@@ -58,24 +67,33 @@ class NYTimes(Newspaper):
   def __init__(self):
     Newspaper.__init__(self, 'http://nytimes.com')
 
+  def absolute_url(self, url):
+    return url
+
   def get_articles(self):
     return self.soup.find_all('article')
 
   def get_headline(self):
     return self.get_articles()[0];
 
-class WSJ(Newspaper):
+
+class Aljazeera(Newspaper):
   def __init__(self):
-    Newspaper.__init__(self, 'http://www.wsj.com/')
-
+    Newspaper.__init__(self, 'http://america.aljazeera.com/')
   def get_articles(self):
-    return self.soup.find_all('h3', 'wsj-headline')
-
+    return self.soup.find_all('article')
   def get_headline(self):
-    return self.get_articles()[0]
+    return self.soup.find('h1', 'topStories-headline')
+
+  def get_image_url(self):
+    a = self.get_articles()[0].img.get('src')
+    return self.absolute_url(a)
+
+
+
 
 if __name__ == '__main__':
-  i = WSJ()
+  i = NYTimes()
   print i.get_image_url()
 
 
