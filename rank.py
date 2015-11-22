@@ -29,7 +29,7 @@ class Rank:
     def news_headlines_images(self):
         nytimes = NYTimes()
         aljazeera = Aljazeera()
-        cnn = CNN()
+        #cnn = CNN()
         bbc = BBC()
         independent = Independent()
         timemagazine = TimeMagazine()
@@ -37,14 +37,14 @@ class Rank:
         headlines = []
         headlines.extend(nytimes.get_headline_texts())
         headlines.extend(aljazeera.get_headline_texts())
-        headlines.extend(cnn.get_headline_texts())
+        #headlines.extend(cnn.get_headline_texts())
         headlines.extend(bbc.get_headline_texts())
         headlines.extend(timemagazine.get_headline_texts())
 
         images = []
         images.extend(nytimes.get_image_urls())
         images.extend(aljazeera.get_image_urls())
-        images.extend(cnn.get_image_urls())
+        #images.extend(cnn.get_image_urls())
         images.extend(bbc.get_image_urls())
         images.extend(timemagazine.get_image_urls())
 
