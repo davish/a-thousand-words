@@ -37,7 +37,7 @@ class ScrapeNews(webapp2.RequestHandler):
 			image = n[1].encode('ascii', 'ignore')
 			url = n[2].encode('ascii', 'ignore')
 			if models.Headline.gql("WHERE image = :1", image).count() < 1:
-				headline = models.Headline(headline=headline, image=image, url=url, time=datetime.datetime.now().date())
+				headline = models.Headline(headline=headline, image=image, url=url, time=datetime.datetime.now())
 				headline.put()
 
 class GetNews(webapp2.RequestHandler):
@@ -50,7 +50,7 @@ class GetNews(webapp2.RequestHandler):
 	</head>
 	<body>
 			""")
-		headlines = models.Headline.gql('WHERE time = :1', datetime.datetime.now().date()).fetch(limit=6)
+		headlines = models.Headline.gql('WHERE time = :1 ORDER BY time DESC', datetime.datetime.now().date()).fetch(limit=6)
 
 		for headline in headlines:
 			self.response.out.write('<a href="' + str(headline.url) + '">')
