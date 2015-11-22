@@ -51,8 +51,10 @@ class GetNews(webapp2.RequestHandler):
 		headlines = models.Headline.gql('WHERE time = :1', datetime.datetime.now().date()).fetch(limit=9)
 
 		for headline in headlines:
-			self.response.out.write('<div class="img">')
+			self.response.out.write('<div class="img" title="' + str(headline.headline) + '"">')
+			self.response.out.write('<a href="' + str(headline.url) + '">')
 			self.response.out.write('<img src="' + str(headline.image) + '" alt="' + str(headline.headline) + '">')
+			self.response.out.write('</a>')
 			self.response.out.write('</div>')
 
 		self.response.out.write("""
@@ -66,6 +68,6 @@ class GetNews(webapp2.RequestHandler):
 
 
 app = webapp2.WSGIApplication([
+	('/', GetNews),
 	('/scrape', ScrapeNews),
-	('/getnews', GetNews)
 ], debug=True)
