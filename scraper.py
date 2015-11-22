@@ -175,13 +175,37 @@ class Independent(Newspaper):
 class TimeMagazine(Newspaper):
     def __init__(self):
         Newspaper.__init__(self, 'http://time.com/')
+    def absolute_url(self, url):
+        return url
     def get_articles(self):
         return self.soup.find_all('article')
     def get_headline(self, article):
         return article
     def get_image_url(self):
-        return self.get_headline().img.get('src')
+        return self.get_headline(self.get_article()).img.get('src')
+
+def getFirstPictures():
+    sources  = [
+        BBC(),
+        NYTimes(),
+        TimeMagazine(),
+        Independent(),
+        CNN(),
+        Aljazeera()
+    ]
+
+    d = []
+    for source in sources:
+        s = [
+        source.get_image_url(), 
+        source.get_headline_url(source.get_article()),
+        source.get_headline_text(source.get_article())
+        ]
+        # print source.url
+        d.append(s)
+    return d
 
 if __name__ == '__main__':
-    i = TimeMagazine()
-    print i.get_image_url()
+    pics = getFirstPictures()
+    for p in pics:
+        print p[1]
