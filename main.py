@@ -17,6 +17,7 @@
 import webapp2
 from google.appengine.ext import vendor
 from rank import *
+import scraper
 import models
 import datetime
 
@@ -28,9 +29,9 @@ class MainHandler(webapp2.RequestHandler):
 
 class ScrapeNews(webapp2.RequestHandler):
 	def get(self):
-		rank = Rank()
-		news = rank.news_headlines_images()
-
+		# rank = Rank()
+		# news = rank.news_headlines_images()
+		news = scraper.getFirstPictures()
 		for n in news:
 			headline = n[0].encode('ascii', 'ignore')
 			image = n[1].encode('ascii', 'ignore')
