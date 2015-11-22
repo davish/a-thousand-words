@@ -1,5 +1,4 @@
 body {
-        padding: 40px;
     background-color: #011f4b;
         font-family: Arial;
 }
@@ -19,18 +18,12 @@ nav {
         line-height: 28px;
 }
 div.img{
-    padding: 0px;
     height: auto;
-    width:auto;
+    width:33%;
     float: left;
 }
 div.img img{
-	width:33%;
-	display: inline;
-    border: 1px solid #ffffff;	
-}
-div.img a:hover img {
-    border:1px solid #0000ff;
+	width: 100%;
 }
 div.desc {
     text-align: center;

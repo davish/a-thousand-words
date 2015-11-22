@@ -148,6 +148,20 @@ class Spiegel(Newspaper):
   def get_image_url(self):
     return self.soup.find('div', id='content-main').img.get('src')
 
+class BBC(Newspaper):
+  def __init__(self):
+    Newspaper.__init__(self, 'http://www.bbc.com/')
+
+  def get_articles(self):
+    return self.soup.find_all('li', 'media-list__item')
+  def get_article(self):
+    return self.get_articles()[0]
+  def get_headline(self):
+    return self.get_article().find('div', 'media__content').find('h3', 'media__title')
+
+  def get_image_url(self):
+    return self.get_headline_soup().find('div', 'story-body__inner').img.get('src')
+
 class Independent(Newspaper):
     def __init__(self):
         Newspaper.__init__(self, 'http://www.independent.co.uk/')
