@@ -197,9 +197,9 @@ def getFirstPictures():
     d = []
     for source in sources:
         s = [
+        source.get_headline_text(source.get_article()),
         source.get_image_url(), 
         source.get_headline_url(source.get_article()),
-        source.get_headline_text(source.get_article())
         ]
         # print source.url
         d.append(s)
