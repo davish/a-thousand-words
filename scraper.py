@@ -48,23 +48,37 @@ class Newspaper:
   def get_headline_text(self):
     return self.get_headline().a.string
 
-  def get_headline_url(self):
-    return self.absolute_url(self.get_headline().a.get('href'))
-
   def get_headline_texts(self):
     return [x.a.string for x in self.get_headlines()]
 
+  def get_headline_url(self):
+    return self.absolute_url(self.get_headline().a.get('href'))
+
   def get_headline_urls(self):
-    return self.get_headline.a.get('href')
-  
+    res = [self.absolute_url(headline.a.get('href')) for headline in self.get_headlines()]
+    return res
+
   def get_headline_soup(self):
     page_url = self.get_headline_url()
     html = requests.get(page_url).content
     return BeautifulSoup(html, 'html.parser')
 
+  def get_headline_soups(self):
+    res = []
+    for page_url in self.get_headline_urls():
+      html = requests.get(page_url).content
+      res.append(BeautifulSoup(html, 'html.parser'))
+    return res
+
   def get_image_url(self):
     s = self.get_headline_soup()
     return s.img.get('src')
+
+  def get_image_urls(self):
+    res = []
+    for s in self.get_headline_soups():
+      res.append(s.img.get('src'))
+    return res
 
 class NYTimes(Newspaper):
   """
@@ -83,14 +97,19 @@ class NYTimes(Newspaper):
     return self.soup.find_all('article')
 
   def get_headline(self):
-    return self.get_articles()[0];
+    return self.get_articles()[0]
+
+  def get_headlines(self):
+    return self.get_articles()[0:9]
 
 
 class Aljazeera(Newspaper):
   def __init__(self):
     Newspaper.__init__(self, 'http://america.aljazeera.com/')
+ 
   def get_articles(self):
     return self.soup.find_all('article')
+
   def get_headline(self):
     return self.soup.find('h1', 'topStories-headline')
 
