@@ -196,8 +196,11 @@ def getFirstPictures():
 
     d = []
     for source in sources:
+        headline = source.get_headline_text(source.get_article())
+        headline = headline if headline is not None else ''
+        headline = headline.replace('\n', ' ').strip()
         s = [
-        source.get_headline_text(source.get_article()),
+        headline,
         source.get_image_url(), 
         source.get_headline_url(source.get_article()),
         ]
@@ -208,4 +211,4 @@ def getFirstPictures():
 if __name__ == '__main__':
     pics = getFirstPictures()
     for p in pics:
-        print p[1]
+        print p[0]
