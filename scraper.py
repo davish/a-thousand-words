@@ -91,6 +91,7 @@ class Aljazeera(Newspaper):
     Newspaper.__init__(self, 'http://america.aljazeera.com/')
   def get_articles(self):
     return self.soup.find_all('article')
+
   def get_headline(self):
     return self.soup.find('h1', 'topStories-headline')
 
@@ -99,9 +100,20 @@ class Aljazeera(Newspaper):
     return self.absolute_url(a)
 
 
+class WashingtonPost(Newspaper):
+  def __init__(self):
+    Newspaper.__init__(self, 'https://www.washingtonpost.com/')
+  def get_articles(self):
+    return self.soup.find_all('div', 'headline')
+
+  def get_headline(self):
+    return self.get_articles()[0]
+
+  def get_image_url(self):
+    return self.get_headline_soup().find('div', id='article-body').img.get('src')
 
 
 if __name__ == '__main__':
-  i = Aljazeera()
+  i = WashingtonPost()
   print i.get_image_url()
 
