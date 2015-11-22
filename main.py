@@ -29,8 +29,8 @@ class MainHandler(webapp2.RequestHandler):
 
 class ScrapeNews(webapp2.RequestHandler):
 	def get(self):
-		# rank = Rank()
-		# news = rank.news_headlines_images()
+		rank = Rank()
+		#news = rank.news_headlines_images()
 		news = scraper.getFirstPictures()
 		for n in news:
 			headline = n[0].encode('ascii', 'ignore')
@@ -50,12 +50,13 @@ class GetNews(webapp2.RequestHandler):
 	</head>
 	<body>
 			""")
-		headlines = models.Headline.gql('WHERE time = :1', datetime.datetime.now().date()).fetch(limit=9)
+		headlines = models.Headline.gql('WHERE time = :1', datetime.datetime.now().date()).fetch(limit=6)
 
 		for headline in headlines:
 			self.response.out.write('<a href="' + str(headline.url) + '">')
-			self.response.out.write('<div class="img" style="background-image: url(' + str(headline.image) + ');" title="' + str(headline.headline) + '"">')
-			self.response.out.write('</a></div>')
+			self.response.out.write('<div class="img" style="background-image: url(' + str(headline.image) + ');" title="' + str(headline.headline) + '">')
+			self.response.out.write('</div></a>')
+			self.response.out.write('\n')
 
 		self.response.out.write("""
 
