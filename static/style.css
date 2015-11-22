@@ -1,37 +1,31 @@
+html {
+	height: 100%;
+}
 body {
     background-color: #262896;
-        font-family: Arial;
+	font-family: Arial;
+	height: 100%;
 }
-h1 {
-    color: #c6d8f6;
-	font-size: 56px;
-    text-align: center;
+table{
+	height: 100%;
+	text-align: center;
+	margin: auto;
 }
-nav {
-        margin-bottom 30px;
-        text-align: center;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        padding: 8px;
-        line-height: 28px;
+td{
+	text-align: center;
+	height: 50%;
 }
-table img{
-	width: 100%;
 div.img{
-    height: 100%;
-    width:33%;
-    float: left;
+	text-align: center;
+	float: left;
+	width: 33%;
+	height: 50%;
 }
 div.img img{
-	width: 100%;
+	height: 100%;
 }
-div.desc {
-    text-align: center;
-    font-weight: normal;
-    width: 120px;
-    margin: 5px;
+table img{
+	height: 100%;
 }
 nav a:link    {color:#b3cde0; background-color:transparent; text-decoration:none}
 nav a:visited {color:pink; background-color:transparent; text-decoration:none}
