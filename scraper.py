@@ -156,6 +156,16 @@ class Independent(Newspaper):
     def get_headline(self):
         return self.get_articles()[0]
 
+class TimeMagazine(Newspaper):
+    def __init__(self):
+        Newspaper.__init__(self, 'http://time.com/')
+    def get_articles(self):
+        return self.soup.find_all('article')
+    def get_headline(self):
+        return self.get_articles()[0]
+    def get_image_url(self):
+        return self.get_headline().img.get('src')
+
 if __name__ == '__main__':
-    i = Independent()
-    print i.get_image_url();
+    i = TimeMagazine()
+    print i.get_image_url()
