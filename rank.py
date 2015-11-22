@@ -32,7 +32,7 @@ class Rank:
 		washingtonpost = WashingtonPost()
 		spiegel = Spiegel()
 		bbc = BBC()
-		indendent = Independent()
+		independent = Independent()
 		timemagazine = TimeMagazine()
 
 		headlines = []
@@ -40,9 +40,9 @@ class Rank:
 		headlines.extend(aljazeera.get_headline_texts())
 		headlines.extend(cnn.get_headline_texts())
 		headlines.extend(washingtonpost.get_headline_texts())
-		headlines.extend(spiegel.get_headline_texts())
+		# headlines.extend(spiegel.get_headline_texts())
 		headlines.extend(bbc.get_headline_texts())
-		headlines.extend(independent.get_headline_texts())
+		# headlines.extend(independent.get_headline_texts())
 		headlines.extend(timemagazine.get_headline_texts())
 
 		return headlines
