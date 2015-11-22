@@ -98,10 +98,21 @@ class Aljazeera(Newspaper):
     a = self.get_articles()[0].img.get('src')
     return self.absolute_url(a)
 
+class CNN(Newspaper):
+    def __init__(self):
+        Newspaper.__init__(self, 'http://cnn.com/')
+    def get_articles(self):
+        return self.soup.find_all('article')
+    def get_headline(self):
+        return self.soup.find('h3', 'cd__headline')
+    
+    def get_image_url(self):
+        s = self.soup.find_all('article')[0].find_all('img')[0].get('data-src-medium')
+        return s
 
 
 
 if __name__ == '__main__':
-  i = Aljazeera()
+  i = CNN()
   print i.get_image_url()
 
