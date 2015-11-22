@@ -15,6 +15,9 @@
 # limitations under the License.
 #
 import webapp2
+from google.appengine.ext import vendor
+
+vendor.add('lib')
 
 class MainHandler(webapp2.RequestHandler):
     def get(self):

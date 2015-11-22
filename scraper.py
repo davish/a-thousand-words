@@ -1,6 +1,6 @@
+import sys
 from bs4 import BeautifulSoup
 import requests
-
 
 class Newspaper:
   """
@@ -33,11 +33,20 @@ class Newspaper:
     """ Get the BS object for the headline. """
     raise NotImplementedError('Abstract Method')
 
+  def get_headlines(self):
+    raise NotImplementedError('Abstract Method')
+
   def get_headline_text(self):
     return self.get_headline().a.string
 
   def get_headline_url(self):
     return self.get_headline().a.get('href')
+
+  def get_headline_texts(self):
+    return [x.a.string for x in self.get_headlines()]
+
+  def get_headline_urls(self):
+    return self.get_headline.a.get('href')
   
   def get_headline_soup(self):
     page_url = self.get_headline_url()
@@ -75,8 +84,6 @@ class WSJ(Newspaper):
     return self.get_articles()[0]
 
 if __name__ == '__main__':
-  i = WSJ()
+  i = NYTimes()
   print i.get_image_url()
-
-
 
