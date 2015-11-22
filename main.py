@@ -36,8 +36,9 @@ class ScrapeNews(webapp2.RequestHandler):
 			headline = n[0].encode('ascii', 'ignore')
 			image = n[1].encode('ascii', 'ignore')
 			url = n[2].encode('ascii', 'ignore')
-			headline = models.Headline(headline=headline, image=image, url=url, time=datetime.datetime.now().date())
-			headline.put()
+			if models.Headline.gql("WHERE image = :1", image).count() < 1:
+				headline = models.Headline(headline=headline, image=image, url=url, time=datetime.datetime.now().date())
+				headline.put()
 
 class GetNews(webapp2.RequestHandler):
 	def get(self):
@@ -52,8 +53,9 @@ class GetNews(webapp2.RequestHandler):
 		headlines = models.Headline.gql('WHERE time = :1', datetime.datetime.now().date()).fetch(limit=9)
 
 		for headline in headlines:
+			self.response.out.write('<a href="' + str(headline.url) + '">')
 			self.response.out.write('<div class="img" style="background-image: url(' + str(headline.image) + ');" title="' + str(headline.headline) + '"">')
-			self.response.out.write('<a href="' + str(headline.url) + '"> </a> </div>')
+			self.response.out.write('</a></div>')
 
 		self.response.out.write("""
 
