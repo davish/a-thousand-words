@@ -30,20 +30,17 @@ class Rank:
         #aljazeera = Aljazeera()
         #cnn = CNN()
         #bbc = BBC()
-        independent = Independent()
+        #independent = Independent()
         #timemagazine = TimeMagazine()
 
         headlines = []
         headlines.extend(nytimes.get_headline_texts())
-        headlines.extend(independent.get_headline_texts())
         
         images = []
         images.extend(nytimes.get_image_urls())
-        images.extend(independent.get_image_urls())
 
         urls = []
         urls.extend(nytimes.get_headline_urls())
-        urls.extend(independent.get_headline_urls())
 
         res = []
         for headline, image, url in zip(headlines, images, urls):
