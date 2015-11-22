@@ -112,8 +112,15 @@ class WashingtonPost(Newspaper):
   def get_image_url(self):
     return self.get_headline_soup().find('div', id='article-body').img.get('src')
 
+class Spiegel(Newspaper):
+  def __init__(self):
+    Newspaper.__init__(self, 'http://www.spiegel.de/international/')
+
+  def get_image_url(self):
+    return self.soup.find('div', id='content-main').img.get('src')
+
 
 if __name__ == '__main__':
-  i = WashingtonPost()
+  i = Spiegel()
   print i.get_image_url()
 
