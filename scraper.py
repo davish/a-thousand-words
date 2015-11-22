@@ -46,13 +46,13 @@ class Newspaper:
         raise NotImplementedError('Abstract Method')
 
     def get_headlines(self):
-        return [self.get_headline(x) for x in self.get_articles()]
+        return [self.get_headline(x) for x in self.get_articles()][:9]
 
     def get_headline_text(self, article):
         return self.get_headline(article).a.string
 
     def get_headline_texts(self):
-        return [x.a.string for x in self.get_headlines()]
+        return [x.a.string if x else '' for x in self.get_headlines()]
 
     def get_headline_url(self, article):
         return self.absolute_url(self.get_headline(article).a.get('href'))
@@ -113,7 +113,7 @@ class Aljazeera(Newspaper):
     def get_articles(self):
         return self.soup.find_all('article')
 
-    def get_headline(self):
+    def get_headline(self, article):
         return self.soup.find('h1', 'topStories-headline')
 
     def get_image_url(self):
@@ -125,7 +125,7 @@ class CNN(Newspaper):
         Newspaper.__init__(self, 'http://cnn.com/')
     def get_articles(self):
         return self.soup.find_all('article')
-    def get_headline(self):
+    def get_headline(self, article):
         return self.soup.find('h3', 'cd__headline')
     
     def get_image_url(self):
