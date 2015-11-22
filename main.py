@@ -43,7 +43,7 @@ class GetNews(webapp2.RequestHandler):
 		self.response.out.write("""
 			<html>
 	<head>
-		<title>a-thousand-words</title>
+		<title>News in Pictures</title>
 		<link rel="stylesheet" href="./style.css">
 	</head>
 	<body>
@@ -51,11 +51,8 @@ class GetNews(webapp2.RequestHandler):
 		headlines = models.Headline.gql('WHERE time = :1', datetime.datetime.now().date()).fetch(limit=9)
 
 		for headline in headlines:
-			self.response.out.write('<div class="img" title="' + str(headline.headline) + '"">')
-			self.response.out.write('<a href="' + str(headline.url) + '">')
-			self.response.out.write('<img src="' + str(headline.image) + '" alt="' + str(headline.headline) + '">')
-			self.response.out.write('</a>')
-			self.response.out.write('</div>')
+			self.response.out.write('<div class="img" style="background-image: url(' + str(headline.image) + ');" title="' + str(headline.headline) + '"">')
+			self.response.out.write('<a href="' + str(headline.url) + '"> </a> </div>')
 
 		self.response.out.write("""
 

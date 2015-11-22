@@ -1,6 +1,5 @@
 #import tweepy
 from fuzzywuzzy import fuzz
-import constants
 from scraper import *
 #import models
 

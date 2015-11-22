@@ -1,0 +1,5 @@
+cron:
+- description: scrape news
+  url: /scrape
+  schedule: every 2 hours
+  target: module1
