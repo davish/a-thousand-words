@@ -1,17 +1,11 @@
 from twitter import *
-
-#-----------------------------------------------------------------------
-# load our API credentials 
-#-----------------------------------------------------------------------
-config = {}
-execfile("config.py", config)
+import constants
 
 #-----------------------------------------------------------------------
 # create twitter API object
 #-----------------------------------------------------------------------
-twitter = Twitter(
-            auth = OAuth(config["access_key"], config["access_secret"], config["consumer_key"], config["consumer_secret"]))
-
+twitter = twitter.Twitter(
+            auth = OAuth(constants.ACCESS_KEY, constants.ACCESS_SECRET, constants.CONSUMER_KEY, constants.CONSUMER_SECRET))
 
 #-----------------------------------------------------------------------
 # retrieve global trends.
@@ -21,7 +15,7 @@ twitter = Twitter(
 #-----------------------------------------------------------------------
 results = twitter.trends.place(_id = 1)
 
-print "UK Trends"
+print "Global Trends"
 
 for location in results:
     for trend in location["trends"]:
