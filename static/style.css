@@ -2,7 +2,7 @@ html {
 	height: 100%;
 }
 body {
-    background-color: #262896;
+    background-color: #ae0001;
 	font-family: Arial;
 	height: 100%;
 }
@@ -14,6 +14,10 @@ table{
 td{
 	text-align: center;
 	height: 50%;
+}
+div.header{
+	color: #740001;
+	text-align: center;
 }
 div.img{
 	text-align: center;
