@@ -7,7 +7,7 @@ class Rank:
 	Ranking Algorithm class
 	"""
 	def __init__(self):
-  		self.location = 1 #1 is GLOBAL
+  		self.location = 1
 
 	def trending(self):
   		auth = tweepy.OAuthHandler(constants.CONSUMER_KEY, constants.CONSUMER_SECRET)
