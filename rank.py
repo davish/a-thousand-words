@@ -1,28 +1,20 @@
-from twitter import *
+import tweepy
+import constants
+import sys
 
-#-----------------------------------------------------------------------
-# load our API credentials 
-#-----------------------------------------------------------------------
-config = {}
-execfile("config.py", config)
+auth = tweepy.OAuthHandler(constants.CONSUMER_KEY, constants.CONSUMER_SECRET)
+auth.set_access_token(constants.ACCESS_KEY, constants.ACCESS_SECRET)
+api = tweepy.API(auth)
 
-#-----------------------------------------------------------------------
-# create twitter API object
-#-----------------------------------------------------------------------
-twitter = Twitter(
-            auth = OAuth(config["access_key"], config["access_secret"], config["consumer_key"], config["consumer_secret"]))
+trends1 = api.trends_place(1) # from the end of your code
+# trends1 is a list with only one element in it, which is a 
+# dict which we'll put in data.
+data = trends1[0] 
+# grab the trends
+trends = data['trends']
+# grab the name from each trend
+names = [trend['name'] for trend in trends]
+# put all the names together with a ' ' separating them
 
-
-#-----------------------------------------------------------------------
-# retrieve global trends.
-# other localised trends can be specified by looking up WOE IDs:
-#   http://developer.yahoo.com/geo/geoplanet/
-# twitter API docs: https://dev.twitter.com/docs/api/1/get/trends/%3Awoeid
-#-----------------------------------------------------------------------
-results = twitter.trends.place(_id = 1)
-
-print "UK Trends"
-
-for location in results:
-    for trend in location["trends"]:
-        print " - %s" % trend["name"]
+for t in names:
+	print t
