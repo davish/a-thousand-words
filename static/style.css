@@ -1,11 +1,10 @@
 body {
-        padding: 40px;
-    background-color: #011f4b;
+    background-color: #262896;
         font-family: Arial;
 }
 h1 {
-    color: black;
-        font-size: 56px;
+    color: #c6d8f6;
+	font-size: 56px;
     text-align: center;
 }
 nav {
@@ -18,19 +17,15 @@ nav {
         padding: 8px;
         line-height: 28px;
 }
+table img{
+	width: 100%;
 div.img{
-    padding: 0px;
-    height: auto;
-    width:auto;
+    height: 100%;
+    width:33%;
     float: left;
 }
 div.img img{
-	width:33%;
-	display: inline;
-    border: 1px solid #ffffff;	
-}
-div.img a:hover img {
-    border:1px solid #0000ff;
+	width: 100%;
 }
 div.desc {
     text-align: center;
