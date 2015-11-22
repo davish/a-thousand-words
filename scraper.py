@@ -43,7 +43,8 @@ class Newspaper:
     raise NotImplementedError('Abstract Method')
 
   def get_headlines(self):
-    raise NotImplementedError('Abstract Method')
+    return self.get_articles()[0:9]
+    #ethod')
 
   def get_headline_text(self):
     return self.get_headline().a.string

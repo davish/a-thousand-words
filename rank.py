@@ -1,20 +1,57 @@
 import tweepy
 import constants
-import sys
+from scraper import *
 
-auth = tweepy.OAuthHandler(constants.CONSUMER_KEY, constants.CONSUMER_SECRET)
-auth.set_access_token(constants.ACCESS_KEY, constants.ACCESS_SECRET)
-api = tweepy.API(auth)
+class Rank:
+	"""
+	Ranking Algorithm class
+	"""
+	def __init__(self):
+  		self.location = 1 #1 is GLOBAL
 
-trends1 = api.trends_place(1) # from the end of your code
-# trends1 is a list with only one element in it, which is a 
-# dict which we'll put in data.
-data = trends1[0] 
-# grab the trends
-trends = data['trends']
-# grab the name from each trend
-names = [trend['name'] for trend in trends]
-# put all the names together with a ' ' separating them
+	def trending(self):
+  		auth = tweepy.OAuthHandler(constants.CONSUMER_KEY, constants.CONSUMER_SECRET)
+		auth.set_access_token(constants.ACCESS_KEY, constants.ACCESS_SECRET)
+		api = tweepy.API(auth)
 
-for t in names:
-	print t
+		#set trends place
+		trends1 = api.trends_place(self.location)
+		data = trends1[0] 
+
+		# grab the trends
+		trends = data['trends']
+		# grab the name from each trend
+		twitter_trending = [trend['name'] for trend in trends]
+		# put all the names together with a ' ' separating them
+		return twitter_trending
+
+	def news_headlines(self):
+		nytimes = NYTimes()
+		aljazeera = Aljazeera()
+		cnn = CNN()
+		washingtonpost = WashingtonPost()
+		spiegel = Spiegel()
+		bbc = BBC()
+		indendent = Independent()
+		timemagazine = TimeMagazine()
+
+		headlines = []
+		headlines.extend(nytimes.get_headline_texts())
+		headlines.extend(aljazeera.get_headline_texts())
+		headlines.extend(cnn.get_headline_texts())
+		headlines.extend(washingtonpost.get_headline_texts())
+		headlines.extend(spiegel.get_headline_texts())
+		headlines.extend(bbc.get_headline_texts())
+		headlines.extend(independent.get_headline_texts())
+		headlines.extend(timemagazine.get_headline_texts())
+
+		return headlines
+
+	def rank(self):
+		headlines = self.news_headlines()
+		trending = self.trending()
+
+
+if __name__ == '__main__':
+	rank = Rank()
+	print rank.news_headlines()
