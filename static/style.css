@@ -1,0 +1,45 @@
+body {
+        padding: 40px;
+    background-color: #011f4b;
+        font-family: Arial;
+}
+h1 {
+    color: black;
+        font-size: 56px;
+    text-align: center;
+}
+nav {
+        margin-bottom 30px;
+        text-align: center;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 8px;
+        line-height: 28px;
+}
+div.img{
+    padding: 0px;
+    height: auto;
+    width:auto;
+    float: left;
+}
+div.img img{
+	width:33%;
+	display: inline;
+    border: 1px solid #ffffff;	
+}
+div.img a:hover img {
+    border:1px solid #0000ff;
+}
+div.desc {
+    text-align: center;
+    font-weight: normal;
+    width: 120px;
+    margin: 5px;
+}
+nav a:link    {color:#b3cde0; background-color:transparent; text-decoration:none}
+nav a:visited {color:pink; background-color:transparent; text-decoration:none}
+nav a:hover   {color:red; background-color:transparent; text-decoration:underline}
+nav a:active  {color:yellow; background-color:transparent; text-decoration:underline}
+

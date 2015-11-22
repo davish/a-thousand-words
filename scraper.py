@@ -152,8 +152,6 @@ class BBC(Newspaper):
   def __init__(self):
     Newspaper.__init__(self, 'http://www.bbc.com/')
 
-  # def absolute_url(self, url):
-  #   return url
   def get_articles(self):
     return self.soup.find_all('li', 'media-list__item')
   def get_article(self):
@@ -164,7 +162,14 @@ class BBC(Newspaper):
   def get_image_url(self):
     return self.get_headline_soup().find('div', 'story-body__inner').img.get('src')
 
-if __name__ == '__main__':
-  i = BBC()
-  print i.get_image_url()
+class Independent(Newspaper):
+    def __init__(self):
+        Newspaper.__init__(self, 'http://www.independent.co.uk/')
+    def get_articles(self):
+        return self.soup.find_all('article');
+    def get_headline(self):
+        return self.get_articles()[0]
 
+if __name__ == '__main__':
+    i = Independent()
+    print i.get_image_url();
