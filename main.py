@@ -32,13 +32,18 @@ class ScrapeNews(webapp2.RequestHandler):
 		rank = Rank()
 		#news = rank.news_headlines_images()
 		news = scraper.getFirstPictures()
+
+		#headlines = models.Headline.all()
+		#for headline in headlines:
+		#	headline.delete()
+
 		for n in news:
 			headline = n[0].encode('ascii', 'ignore')
 			image = n[1].encode('ascii', 'ignore')
 			url = n[2].encode('ascii', 'ignore')
-			if models.Headline.gql("WHERE url = :1", url).count() < 1:
-				headline = models.Headline(headline=headline, image=image, url=url, time=datetime.datetime.now())
-				headline.put()
+			#if models.Headline.gql("WHERE url = :1", url).count() < 1:
+			headline = models.Headline(headline=headline, image=image, url=url, time=datetime.datetime.now())
+			headline.put()
 		self.response.out.write("Sometimes, you eat the bear... and sometimes, well, the bear eats you")
 
 class GetNews(webapp2.RequestHandler):
@@ -48,11 +53,11 @@ class GetNews(webapp2.RequestHandler):
 	<head>
 		<title>News in Pictures</title>
 		<link rel="stylesheet" href="./style.css">
-		<meta http-equiv="refresh" content="3600; URL=/">
+		<meta http-equiv="refresh" content="600; URL=/">
 	</head>
 	<body>
 			""")
-		headlines = models.Headline.gql("WHERE time != DATE('2015-01-01')").fetch(limit=6)
+		headlines = models.Headline.gql("WHERE time != DATE('2015-01-01') ORDER BY time DESC").fetch(limit=6)
 
 		for headline in headlines:
 			self.response.out.write('<div class="img" style="background-image: url(\'' + str(headline.image) + '\');">')
