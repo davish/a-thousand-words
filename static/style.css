@@ -1,4 +1,4 @@
-html {
+ html {
 	height: 100%;
 	width: 100%;
 	overflow: hidden;
@@ -20,7 +20,7 @@ div.img{
 	position: relative;
 	text-align: center;
 	float: left;
-	width: 33.333333333%;
+	width: 33.33%;
 	height: 50%;
 	background-size: cover;
 	background-position: center;
@@ -35,17 +35,39 @@ div.img a {
 div.img img{
 	height: 100%;
 }
-table img{
-	height: 100%;
-}
-div.img.text {
+div.img .text {
 position:relative;
 bottom:30px;
-left:0px;
+left:30px;
 visibility:hidden;
 }
-#wrapper:hover .text {
+div.img .text {
 visibility:visible;
+}
+span.text-content {
+    background: rgba(0,0,0,0.5);
+    color: white;
+    cursor: pointer;
+    display: table;
+    height: 100%;
+    left: 0;
+    position: absolute;
+    top: 0;
+    width: 100%;
+    opacity: 0;
+    -webkit-transition: opacity 750ms;
+    -moz-transition: opacity 750ms;
+    -o-transition: opacity 750ms;
+    transition: opacity 750ms;
+
+}
+span.text-content span {
+    display: table-cell;
+    text-align: center;
+    vertical-align: middle;
+}
+div.img:hover span.text-content {
+    opacity: 1;
 }
 nav a:link    {color:#b3cde0; background-color:transparent; text-decoration:none}
 nav a:visited {color:pink; background-color:transparent; text-decoration:none}
