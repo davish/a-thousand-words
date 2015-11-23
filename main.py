@@ -50,7 +50,7 @@ class GetNews(webapp2.RequestHandler):
 	</head>
 	<body>
 			""")
-		headlines = models.Headline.gql('WHERE time = :1 ORDER BY time DESC', datetime.datetime.now().date()).fetch(limit=6)
+		headlines = models.Headline.gql("WHERE time != DATE('2015-01-01')").fetch(limit=6)
 
 		for headline in headlines:
 			self.response.out.write('<a href="' + str(headline.url) + '">')

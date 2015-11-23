@@ -18,7 +18,7 @@ class Newspaper:
 
     def __init__(self, url):
         self.url = url
-        self.html = requests.get(url).content
+        self.html = requests.get(url, timeout=10).content
         self.soup = BeautifulSoup(self.html, 'html.parser')
 
     def absolute_url(self, url):
