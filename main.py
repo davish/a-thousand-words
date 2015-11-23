@@ -47,6 +47,7 @@ class GetNews(webapp2.RequestHandler):
 	<head>
 		<title>News in Pictures</title>
 		<link rel="stylesheet" href="./style.css">
+		<meta http-equiv="refresh" content="3600; URL=/">
 	</head>
 	<body>
 			""")

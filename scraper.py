@@ -197,6 +197,7 @@ def getFirstPictures():
     d = []
     for source in sources:
         headline = source.get_headline_text(source.get_article())
+        print headline
         headline = headline if headline is not None else ''
         headline = headline.replace('\n', ' ').strip()
         s = [
