@@ -55,7 +55,7 @@ class GetNews(webapp2.RequestHandler):
 	</head>
 	<body>
 			""")
-		headlines = models.Headline.gql("WHERE time != DATE('2015-01-01')").fetch(limit=6)
+		headlines = models.Headline.gql("WHERE time != DATE('2015-01-01') ORDER BY time DESC").fetch(limit=6)
 
 		for headline in headlines:
 			self.response.out.write('<div class="img" style="background-image: url(\'' + str(headline.image) + '\');">')
