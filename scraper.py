@@ -18,7 +18,7 @@ class Newspaper:
 
     def __init__(self, url):
         self.url = url
-        self.html = requests.get(url).content
+        self.html = requests.get(url, timeout=10).content
         self.soup = BeautifulSoup(self.html, 'html.parser')
 
     def absolute_url(self, url):
@@ -162,7 +162,7 @@ class BBC(Newspaper):
         return article.find('div', 'media__content').find('h3', 'media__title')
 
     def get_image_url(self):
-        return self.get_headline_soup().find('div', 'story-body__inner').img.get('src')
+        return self.get_headline_soup().find('meta', property='og:image').get('content')
 
 class Independent(Newspaper):
     def __init__(self):
@@ -182,7 +182,7 @@ class TimeMagazine(Newspaper):
     def get_headline(self, article):
         return article
     def get_image_url(self):
-        return self.get_headline(self.get_article()).img.get('src')
+        return self.get_headline(self.get_article()).img.get('data-srcset')
 
 def getFirstPictures():
     sources  = [
@@ -196,10 +196,13 @@ def getFirstPictures():
 
     d = []
     for source in sources:
+        headline = source.get_headline_text(source.get_article())
+        headline = headline if headline is not None else ''
+        headline = headline.replace('\n', ' ').strip()
         s = [
+        headline,
         source.get_image_url(), 
         source.get_headline_url(source.get_article()),
-        source.get_headline_text(source.get_article())
         ]
         # print source.url
         d.append(s)
