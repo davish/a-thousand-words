@@ -105,6 +105,10 @@ class NYTimes(Newspaper):
     def get_headlines(self):
         return self.get_articles()[0:9]
 
+    def get_image_url(self):
+        s = self.get_headline_soup()
+        return s.find('meta', property='og:image').get('content')
+
 
 class Aljazeera(Newspaper):
     def __init__(self):
@@ -119,10 +123,13 @@ class Aljazeera(Newspaper):
     def is_correct_image(self, tag):
         return tag.get('data-media') == '(min-width: 768px)'
     
+    #def get_image_url(self):
+    #a = self.get_articles()[0].div(self.is_correct_image)[0].get('data-src')
+    #a = a.replace("image.adapt.375.high", "image.adapt.1000.high");
+#return self.absolute_url(a)
     def get_image_url(self):
-        a = self.get_articles()[0].div(self.is_correct_image)[0].get('data-src')
-        a = a.replace("image.adapt.375.high", "image.adapt.1000.high");
-        return self.absolute_url(a)
+        s = self.get_headline_soup()
+        return s.find('meta', property='og:image').get('content')
 
 class CNN(Newspaper):
     def __init__(self):
@@ -136,7 +143,7 @@ class CNN(Newspaper):
         return [repr(soup) for soup in self.get_headline_soup().find('article').find('p', 'zn-body__paragraph').stripped_strings][1]
     
     def get_image_url(self):
-        s = self.soup.find_all('article')[0].find_all('img')[0].get('data-src-medium')
+        s = self.soup.find_all('article')[0].find_all('img')[0].get('data-src-full16x9')
         return s
 
 class WashingtonPost(Newspaper):
@@ -222,5 +229,5 @@ def getFirstPictures():
     return d
 
 if __name__ == '__main__':
-    i = CNN()
-    print i.get_headline_text(i.get_article())
+    i = NYTimes()
+    print i.get_image_url()
