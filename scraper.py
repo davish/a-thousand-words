@@ -182,7 +182,7 @@ class TimeMagazine(Newspaper):
     def get_headline(self, article):
         return article
     def get_image_url(self):
-        return self.get_headline(self.get_article()).img.get('src')
+        return self.get_headline(self.get_article()).img.get('data-srcset')
 
 def getFirstPictures():
     sources  = [
