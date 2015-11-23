@@ -48,7 +48,6 @@ span.text-content {
     background: rgba(0,0,0,0.5);
     color: white;
     cursor: pointer;
-    display: table;
     height: 100%;
     left: 0;
     position: absolute;
@@ -59,12 +58,21 @@ span.text-content {
     -moz-transition: opacity 750ms;
     -o-transition: opacity 750ms;
     transition: opacity 750ms;
+    
+    
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-flex-align: center;
+	-ms-flex-align: center;
+	-webkit-align-items: center;
+	align-items: center;
+	justify-content: center;
 
 }
 span.text-content span {
-    display: table-cell;
-    text-align: center;
-    vertical-align: middle;
 }
 div.img:hover span.text-content {
     opacity: 1;
