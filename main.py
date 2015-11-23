@@ -54,7 +54,7 @@ class GetNews(webapp2.RequestHandler):
 
 		for headline in headlines:
 			self.response.out.write('<a href="' + str(headline.url) + '">')
-			self.response.out.write('<div class="img" style="background-image: url(' + str(headline.image) + ');" title="' + str(headline.headline) + '">')
+			self.response.out.write('<div class="img" style="background-image: url(\'' + str(headline.image) + '\');" title="' + str(headline.headline) + '">')
 			self.response.out.write('</div></a>')
 			self.response.out.write('\n')
 
