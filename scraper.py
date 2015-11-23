@@ -129,7 +129,7 @@ class Aljazeera(Newspaper):
     #   return self.absolute_url(a)
     def get_image_url(self):
         s = self.get_headline_soup()
-        return s.find('meta', property='og:image').get('content')
+        return self.absolute_url(s.find('meta', property='og:image').get('content'))
 
 class CNN(Newspaper):
     def __init__(self):
