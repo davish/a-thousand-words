@@ -162,7 +162,7 @@ class BBC(Newspaper):
         return article.find('div', 'media__content').find('h3', 'media__title')
 
     def get_image_url(self):
-        return self.get_headline_soup().find('div', 'story-body__inner').img.get('src')
+        return self.get_headline_soup().find('meta', property='og:image').get('content')
 
 class Independent(Newspaper):
     def __init__(self):
@@ -211,4 +211,4 @@ def getFirstPictures():
 if __name__ == '__main__':
     pics = getFirstPictures()
     for p in pics:
-        print p[0]
+        print p[1]
