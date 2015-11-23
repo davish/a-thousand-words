@@ -59,6 +59,8 @@ span.text-content {
     -o-transition: opacity 750ms;
     transition: opacity 750ms;
     
+    overflow: hidden;
+    
     
 	display: -webkit-box;
 	display: -webkit-flex;
@@ -73,6 +75,8 @@ span.text-content {
 
 }
 span.text-content span {
+	padding-left: 5%;
+	padding-right: 5%;
 }
 div.img:hover span.text-content {
     opacity: 1;
