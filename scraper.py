@@ -131,7 +131,8 @@ class CNN(Newspaper):
     def get_headline(self, article):
         return self.soup.find('h3', 'cd__headline')
     def get_headline_text(self, article):
-        return article.find('span', 'cd__headline-text').string;
+        #return article.find('h2').string
+        return [repr(soup) for soup in self.get_headline_soup().find('article').find('p', 'zn-body__paragraph').stripped_strings][1]
     
     def get_image_url(self):
         s = self.soup.find_all('article')[0].find_all('img')[0].get('data-src-medium')
@@ -220,5 +221,5 @@ def getFirstPictures():
     return d
 
 if __name__ == '__main__':
-    i = Independent()
+    i = CNN()
     print i.get_headline_text(i.get_article())
