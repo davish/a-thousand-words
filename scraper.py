@@ -22,7 +22,7 @@ class Newspaper:
         self.soup = BeautifulSoup(self.html, 'html.parser')
 
     def absolute_url(self, url):
-        if self.url.startswith(url):
+        if url.startswith(self.url):
           return url
 
         if url[0] == '/':
@@ -130,6 +130,8 @@ class CNN(Newspaper):
         return self.soup.find_all('article')
     def get_headline(self, article):
         return self.soup.find('h3', 'cd__headline')
+    def get_headline_text(self, article):
+        return article.find('span', 'cd__headline-text').string;
     
     def get_image_url(self):
         s = self.soup.find_all('article')[0].find_all('img')[0].get('data-src-medium')
@@ -186,6 +188,8 @@ class TimeMagazine(Newspaper):
         return self.soup.find_all('article')
     def get_headline(self, article):
         return article
+    def get_headline_text(self, article):
+        return self.get_headline(article).p.string
     def get_image_url(self):
         return self.get_headline(self.get_article()).img.get('data-srcset')
 
