@@ -19,7 +19,7 @@ class Newspaper:
     def __init__(self, url):
         self.url = url
         self.html = requests.get(url, timeout=10).content
-        self.soup = BeautifulSoup(self.html, 'html.parser')
+        self.soup = BeautifulSoup(self.html, 'html5lib')
 
     def absolute_url(self, url):
         if self.url.startswith(url):
@@ -32,7 +32,7 @@ class Newspaper:
 
     def refresh(self):
         self.html = requests.get(self.url).content
-        self.soup = BeautifulSoup(self.html, 'html.parser')
+        self.soup = BeautifulSoup(self.html, 'html5lib')
 
     def get_articles(self):
         """ Get an array of articles on the homepage. """
@@ -64,13 +64,13 @@ class Newspaper:
     def get_headline_soup(self):
         page_url = self.get_headline_url(self.get_article())
         html = requests.get(page_url).content
-        return BeautifulSoup(html, 'html.parser')
+        return BeautifulSoup(html, 'html5lib')
 
     def get_headline_soups(self):
         res = []
         for page_url in self.get_headline_urls():
           html = requests.get(page_url).content
-          res.append(BeautifulSoup(html, 'html.parser'))
+          res.append(BeautifulSoup(html, 'html5lib'))
         return res
 
     def get_image_url(self):
@@ -115,9 +115,12 @@ class Aljazeera(Newspaper):
 
     def get_headline(self, article):
         return self.soup.find('h1', 'topStories-headline')
-
+    
+    def is_correct_image(self, tag):
+        return tag.get('data-media') == '(min-width: 768px)'
+    
     def get_image_url(self):
-        a = self.get_articles()[0].img.get('src')
+        a = self.get_articles()[0].div(self.is_correct_image)[0].get('data-src')
         return self.absolute_url(a)
 
 class CNN(Newspaper):
@@ -162,7 +165,7 @@ class BBC(Newspaper):
         return article.find('div', 'media__content').find('h3', 'media__title')
 
     def get_image_url(self):
-        return self.get_headline_soup().find('div', 'story-body__inner').img.get('src')
+        return self.get_headline_soup().find('meta', property='og:image').get('content')
 
 class Independent(Newspaper):
     def __init__(self):
@@ -182,7 +185,7 @@ class TimeMagazine(Newspaper):
     def get_headline(self, article):
         return article
     def get_image_url(self):
-        return self.get_headline(self.get_article()).img.get('src')
+        return self.get_headline(self.get_article()).img.get('data-srcset')
 
 def getFirstPictures():
     sources  = [
@@ -212,4 +215,4 @@ def getFirstPictures():
 if __name__ == '__main__':
     pics = getFirstPictures()
     for p in pics:
-        print p[0]
+        print p[1]
