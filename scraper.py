@@ -18,8 +18,8 @@ class Newspaper:
 
     def __init__(self, url):
         self.url = url
-        self.html = requests.get(url, timeout=10).content
-        self.soup = BeautifulSoup(self.html, 'html5lib')
+        self.html = requests.get(url, timeout=15).content
+        self.soup = BeautifulSoup(self.html, 'html.parser')
 
     def absolute_url(self, url):
         if self.url.startswith(url):
@@ -31,8 +31,8 @@ class Newspaper:
           return self.url + url
 
     def refresh(self):
-        self.html = requests.get(self.url).content
-        self.soup = BeautifulSoup(self.html, 'html5lib')
+        self.html = requests.get(self.url, timeout=15).content
+        self.soup = BeautifulSoup(self.html, 'html.parser')
 
     def get_articles(self):
         """ Get an array of articles on the homepage. """
@@ -64,13 +64,13 @@ class Newspaper:
     def get_headline_soup(self):
         page_url = self.get_headline_url(self.get_article())
         html = requests.get(page_url).content
-        return BeautifulSoup(html, 'html5lib')
+        return BeautifulSoup(html, 'html.parser')
 
     def get_headline_soups(self):
         res = []
         for page_url in self.get_headline_urls():
           html = requests.get(page_url).content
-          res.append(BeautifulSoup(html, 'html5lib'))
+          res.append(BeautifulSoup(html, 'html.parser'))
         return res
 
     def get_image_url(self):
@@ -200,8 +200,9 @@ def getFirstPictures():
     d = []
     for source in sources:
         headline = source.get_headline_text(source.get_article())
-        print headline
         headline = headline if headline is not None else ''
+        headline = headline.encode('ascii', 'ignore')
+        print headline
         headline = headline.replace('\n', ' ').strip()
         s = [
         headline,
