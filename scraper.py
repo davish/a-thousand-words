@@ -174,6 +174,8 @@ class Independent(Newspaper):
         return self.soup.find_all('article');
     def get_headline(self, article):
         return article
+    def get_headline_text(self, article):
+        return self.get_headline(article).h1.text
 
 class TimeMagazine(Newspaper):
     def __init__(self):
@@ -214,6 +216,5 @@ def getFirstPictures():
     return d
 
 if __name__ == '__main__':
-    pics = getFirstPictures()
-    for p in pics:
-        print p[1]
+    i = Independent()
+    print i.get_headline_text(i.get_article())
