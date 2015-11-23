@@ -121,7 +121,7 @@ class Aljazeera(Newspaper):
     
     def get_image_url(self):
         a = self.get_articles()[0].div(self.is_correct_image)[0].get('data-src')
-        a = a.replace("image.adapt.425.low", "image.adapt.1000.high");
+        a = a.replace("image.adapt.375.high", "image.adapt.1000.high");
         return self.absolute_url(a)
 
 class CNN(Newspaper):
