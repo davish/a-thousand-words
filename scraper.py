@@ -123,10 +123,10 @@ class Aljazeera(Newspaper):
     def is_correct_image(self, tag):
         return tag.get('data-media') == '(min-width: 768px)'
     
-    #def get_image_url(self):
-    #a = self.get_articles()[0].div(self.is_correct_image)[0].get('data-src')
-    #a = a.replace("image.adapt.375.high", "image.adapt.1000.high");
-#return self.absolute_url(a)
+    #    def get_image_url(self):
+    #        a = self.get_articles()[0].div(self.is_correct_image)[0].get('data-src')
+    #       a = a.replace("image.adapt.375.high", "image.adapt.1000.high");
+    #   return self.absolute_url(a)
     def get_image_url(self):
         s = self.get_headline_soup()
         return s.find('meta', property='og:image').get('content')
@@ -199,8 +199,11 @@ class TimeMagazine(Newspaper):
         return article
     def get_headline_text(self, article):
         return self.get_headline(article).p.string
+        #def get_image_url(self):
+        #return self.get_headline(self.get_article()).img.get('data-srcset')
     def get_image_url(self):
-        return self.get_headline(self.get_article()).img.get('data-srcset')
+        s = self.get_headline_soup()
+        return s.find('meta', property='og:image').get('content')
 
 def getFirstPictures():
     sources  = [
@@ -229,5 +232,5 @@ def getFirstPictures():
     return d
 
 if __name__ == '__main__':
-    i = NYTimes()
+    i = Aljazeera()
     print i.get_image_url()
