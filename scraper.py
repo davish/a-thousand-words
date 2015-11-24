@@ -164,7 +164,8 @@ class BBC(Newspaper):
         return self.soup.find_all('li', 'media-list__item')
     
     def get_headline(self, article):
-        return article.find('div', 'media__content').find('h3', 'media__title')
+        #return article.find('div', 'media__content').find('h3', 'media__title')
+        return article.find('div', 'media__content').find('p', 'media__summary')
 
     def get_image_url(self):
         return self.get_headline_soup().find('meta', property='og:image').get('content')
@@ -178,6 +179,8 @@ class Independent(Newspaper):
         return article
     def get_headline_text(self, article):
         return self.get_headline(article).h1.text
+    def get_image_url(self):
+        return self.get_headline_soup().find('meta', property='og:image').get('content')
 
 class TimeMagazine(Newspaper):
     def __init__(self):
