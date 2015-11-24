@@ -189,7 +189,7 @@ class TimeMagazine(Newspaper):
     def get_headline(self, article):
         return article
     def get_headline_text(self, article):
-        return self.get_headline(article).p.string
+        return self.get_headline(article).p.string.replace('\n', '').replace('\t', '')
     def get_image_url(self):
         return self.get_headline(self.get_article()).img.get('data-srcset')
 
@@ -220,5 +220,5 @@ def getFirstPictures():
     return d
 
 if __name__ == '__main__':
-    i = Independent()
+    i = CNN()
     print i.get_headline_text(i.get_article())
