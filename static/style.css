@@ -32,9 +32,6 @@ div.img a {
 	bottom: 0;
 	right: 0;
 }
-div.img img{
-	height: 100%;
-}
 div.img .text {
 position:relative;
 bottom:30px;
@@ -74,9 +71,21 @@ span.text-content {
 	justify-content: center;
 
 }
-span.text-content span {
+span.text-content span.headline{
 	padding-left: 5%;
 	padding-right: 5%;
+}
+span.text-content span.logo{
+	width: 8%;
+	height: auto;
+	position: absolute;
+	padding-right: 5%;
+	padding-bottom: 4%;
+	right: 0;
+	bottom: 0;
+}
+span.text-content span.logo img{
+	width: 100%;
 }
 div.img:hover span.text-content {
     opacity: 1;
