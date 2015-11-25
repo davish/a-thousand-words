@@ -6,7 +6,7 @@
 }
 body {
     background-color: #cccccc;
-	font-family: Arial;
+	font-family: Arial, Helvetica, sans-serif;
 	height: 100%;
 	width: 100%;
 	margin:0;
@@ -72,8 +72,22 @@ span.text-content {
 
 }
 span.text-content span.headline{
+	font-size: 18px;
+	position: absolute;
+	width: 90%;
+	right: 0;
+	bottom: 45%;
 	padding-left: 5%;
 	padding-right: 5%;
+}
+span.text-content span.blurb{
+	font-size: 14px;
+	position: absolute;
+	top: 60%;
+	width: 70%;
+	right: 0;
+	padding-right: 15%;
+	padding-left: 15%;
 }
 span.text-content span.logo{
 	width: 8%;
@@ -87,6 +101,7 @@ span.text-content span.logo{
 span.text-content span.logo img{
 	width: 100%;
 }
+
 div.img:hover span.text-content {
     opacity: 1;
 }
