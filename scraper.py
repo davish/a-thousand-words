@@ -195,8 +195,11 @@ class BBC(Newspaper):
     
     def get_headline(self, article):
         #return article.find('div', 'media__content').find('h3', 'media__title')
-        return article.find('div', 'media__content').find('p', 'media__summary')
-
+        return article.find('div', 'media__content')
+    
+    def get_headline_text(self, article):
+        return self.get_headline(article).find('p', 'media__summary').string
+    
     def get_image_url(self):
         return self.get_headline_soup().find('meta', property='og:image').get('content')
 
@@ -266,5 +269,5 @@ def getFirstPictures():
     return d
 
 if __name__ == '__main__':
-    i = CNN()
+    i = BBC()
     print i.get_headline_text(i.get_article())
