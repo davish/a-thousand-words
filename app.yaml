@@ -13,6 +13,10 @@ handlers:
   static_files: static/style.css
   upload: static/style.css
 
+- url: /(.*\.(gif|png|jpg))$
+  static_files: static/\1
+  upload: static/.*\.(gif|png|jpg)$
+
 - url: .*
   script: main.app
 
