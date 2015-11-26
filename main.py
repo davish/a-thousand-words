@@ -72,7 +72,7 @@ class GetNews(webapp2.RequestHandler):
    		 	self.response.out.write(str(headline.headline))
 			self.response.out.write('</span>')
 			self.response.out.write('<span class="blurb">')
-			self.response.out.write('Blurb goes here')
+			#self.response.out.write('Blurb goes here')
    		 	self.response.out.write('</span>')
    		 	self.response.out.write('<span class=logo>')
    		 	self.response.out.write('<img src="/' + str(headline.source) +'.png" alt="">')
