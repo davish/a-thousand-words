@@ -49,7 +49,7 @@ class Newspaper:
         return [self.get_headline(x) for x in self.get_articles()][:9]
 
     def get_headline_text(self, article):
-        return self.get_headline(article).a.string
+        return self.get_headline(article).a.string 
 
     def get_headline_texts(self):
         return [x.a.string if x else '' for x in self.get_headlines()]
@@ -83,6 +83,9 @@ class Newspaper:
           res.append(s.img.get('src'))
         return res
 
+    def get_source(self):
+        raise NotImplementedError('Abstract Method')
+
 class NYTimes(Newspaper):
     """
     NY Times headline image scraper.
@@ -109,6 +112,8 @@ class NYTimes(Newspaper):
         s = self.get_headline_soup()
         return s.find('meta', property='og:image').get('content')
 
+    def get_source(self):
+        return "nytimes"
 
 class Aljazeera(Newspaper):
     def __init__(self):
@@ -131,6 +136,9 @@ class Aljazeera(Newspaper):
         s = self.get_headline_soup()
         return self.absolute_url(s.find('meta', property='og:image').get('content'))
 
+    def get_source(self):
+        return "aljazeera"
+
 class CNN(Newspaper):
     def __init__(self):
         Newspaper.__init__(self, 'http://cnn.com/')
@@ -150,6 +158,9 @@ class CNN(Newspaper):
         s = self.soup.find_all('article')[0].find_all('img')[0].get('data-src-full16x9')
         return s
 
+    def get_source(self):
+        return "cnn"
+
 class WashingtonPost(Newspaper):
     def __init__(self):
         Newspaper.__init__(self, 'https://www.washingtonpost.com/')
@@ -162,12 +173,18 @@ class WashingtonPost(Newspaper):
     def get_image_url(self):
         return self.get_headline_soup().find('div', id='article-body').img.get('src')
 
+    def get_source(self):
+        return "washingtonpost"
+
 class Spiegel(Newspaper):
     def __init__(self):
         Newspaper.__init__(self, 'http://www.spiegel.de/international/')
 
     def get_image_url(self):
         return self.soup.find('div', id='content-main').img.get('src')
+
+    def get_source(self):
+        return "spiegel"
 
 class BBC(Newspaper):
     def __init__(self):
@@ -183,6 +200,9 @@ class BBC(Newspaper):
     def get_image_url(self):
         return self.get_headline_soup().find('meta', property='og:image').get('content')
 
+    def get_source(self):
+        return "bbc"
+
 class Independent(Newspaper):
     def __init__(self):
         Newspaper.__init__(self, 'http://www.independent.co.uk/')
@@ -194,6 +214,9 @@ class Independent(Newspaper):
         return self.get_headline(article).h1.text
     def get_image_url(self):
         return self.get_headline_soup().find('meta', property='og:image').get('content')
+
+    def get_source(self):
+        return "independent"
 
 class TimeMagazine(Newspaper):
     def __init__(self):
@@ -212,6 +235,9 @@ class TimeMagazine(Newspaper):
         s = self.get_headline_soup()
         return s.find('meta', property='og:image').get('content')
 
+    def get_source(self):
+        return "time"
+        
 def getFirstPictures():
     sources  = [
         BBC(),
@@ -233,6 +259,7 @@ def getFirstPictures():
         headline,
         source.get_image_url(), 
         source.get_headline_url(source.get_article()),
+        source.get_source()
         ]
         # print source.url
         d.append(s)
