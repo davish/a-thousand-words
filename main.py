@@ -70,12 +70,13 @@ class GetNews(webapp2.RequestHandler):
 			self.response.out.write('<span class="headline">')
    		 	self.response.out.write(str(headline.headline))
 			self.response.out.write('</span>')
-			self.response.out.write('<span class="blurb">')
-			self.response.out.write('Blurb goes here')
-   		 	self.response.out.write('</span>')
-   		 	self.response.out.write('<span class=logo>')
-   		 	self.response.out.write('<img src="/' + str(headline.source) +'.png" alt="">')
-   		 	self.response.out.write('</span>')
+			#self.response.out.write('<span class="blurb">')
+			#self.response.out.write('Blurb goes here')
+   		 	#self.response.out.write('</span>')
+   		 	if headline.source is not None:
+   		 		self.response.out.write('<span class=logo>')
+   		 		self.response.out.write('<img src="/' + str(headline.source) +'.png" alt="">')
+   		 		self.response.out.write('</span>')
 			self.response.out.write('</span>')
 			self.response.out.write('</a>')
 			self.response.out.write('</div>')
@@ -88,10 +89,16 @@ class GetNews(webapp2.RequestHandler):
 
 
 			""")
-		
+
+class NumHeadlines(webapp2.RequestHandler):
+	def get(self):
+		headlines = models.Headline.gql("WHERE time != DATE('2015-01-01') ORDER BY time DESC").count()
+		self.response.out.write(headlines)
+	
 
 
 app = webapp2.WSGIApplication([
 	('/', GetNews),
 	('/scrape', ScrapeNews),
+	('/numheadlines', NumHeadlines)
 ], debug=True)
