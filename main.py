@@ -101,5 +101,5 @@ class NumHeadlines(webapp2.RequestHandler):
 app = webapp2.WSGIApplication([
 	('/', GetNews),
 	('/scrape', ScrapeNews),
-	('/numheadlines', NumHeadlines)
+	('/numheadlines', NumHeadlines),
 ], debug=True)
