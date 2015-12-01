@@ -41,8 +41,9 @@ class ScrapeNews(webapp2.RequestHandler):
 			headline = n[0].encode('ascii', 'ignore')
 			image = n[1].encode('ascii', 'ignore')
 			url = n[2].encode('ascii', 'ignore')
+			source = n[3].encode('ascii', 'ignore')
 			#if models.Headline.gql("WHERE url = :1", url).count() < 1:
-			headline = models.Headline(headline=headline, image=image, url=url, time=datetime.datetime.now())
+			headline = models.Headline(headline=headline, image=image, url=url, source=source, time=datetime.datetime.now())
 			headline.put()
 		self.response.out.write("Sometimes, you eat the bear... and sometimes, well, the bear eats you")
 
@@ -65,7 +66,19 @@ class GetNews(webapp2.RequestHandler):
 		for headline in headlines:
 			self.response.out.write('<div class="img" style="background-image: url(\'' + str(headline.image) + '\');">')
 			self.response.out.write('<a href="' + str(headline.url) + '">')
-			self.response.out.write('<span class="text-content"><span>' + str(headline.headline) + '</span></span>')
+			self.response.out.write('<span class="text-content">')
+			self.response.out.write('<span>')
+			self.response.out.write('<span class="headline">')
+   		 	self.response.out.write(str(headline.headline))
+			self.response.out.write('</span>')
+			self.response.out.write('<span class="blurb">')
+			#self.response.out.write('Blurb goes here')
+   		 	self.response.out.write('</span>')
+   		 	self.response.out.write('<span class=logo>')
+   		 	self.response.out.write('<img src="/' + str(headline.source) +'.png" alt="">')
+   		 	self.response.out.write('</span>')
+   		 	self.response.out.write('</span>')
+			self.response.out.write('</span>')
 			self.response.out.write('</a>')
 			self.response.out.write('</div>')
 			self.response.out.write('\n')
@@ -77,10 +90,16 @@ class GetNews(webapp2.RequestHandler):
 
 
 			""")
-		
+
+class NumHeadlines(webapp2.RequestHandler):
+	def get(self):
+		headlines = models.Headline.gql("WHERE time != DATE('2015-01-01') ORDER BY time DESC").count()
+		self.response.out.write(headlines)
+	
 
 
 app = webapp2.WSGIApplication([
 	('/', GetNews),
 	('/scrape', ScrapeNews),
+	('/numheadlines', NumHeadlines),
 ], debug=True)
