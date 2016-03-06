@@ -181,8 +181,17 @@ class Spiegel(Newspaper):
     def __init__(self):
         Newspaper.__init__(self, 'http://www.spiegel.de/international/')
 
+    def get_articles(self):
+        return ['apple', 'banana', 'carrot']
+
+    def get_headline_text(self, article):
+        return self.soup.find('h2', {'class' : 'article-title '}).a['title']
+
+    def get_headline_url(self, article):
+        return 'http://www.spiegel.de' + self.soup.find('h2', {'class' : 'article-title '}).a['href']
+
     def get_image_url(self):
-        return self.soup.find('div', id='content-main').img.get('src')
+        return self.soup.find('div', {'class' : 'image-buttons-panel clearfix'}).img['src']
 
     def get_source(self):
         return "spiegel"
@@ -249,7 +258,7 @@ def getFirstPictures():
         TimeMagazine(),
         Independent(),
         CNN(),
-        Aljazeera()
+        Spiegel()
     ]
 
     d = []
@@ -270,5 +279,7 @@ def getFirstPictures():
     return d
 
 if __name__ == '__main__':
-    i = BBC()
-    print i.get_headline_text(i.get_article())
+    i = Spiegel()
+    print i.get_headline()
+    print i.get_image_url()
+    print i.get_headline_url()
